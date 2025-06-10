@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sakura Gourmet | Restaurante Japonês Premium</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#e53e3e',
+                        secondary: '#2d3748',
+                        accent: '#c53030',
+                        light: '#f7fafc',
+                        dark: '#1a202c',
+                        nexaBlue: '#2563eb',
+                        nexaPurple: '#9333ea'
+                    },
+                    fontFamily: {
+                        'playfair': ['Playfair Display', 'serif'],
+                        'montserrat': ['Montserrat', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f7fafc;
+            color: #1a202c;
+            padding-top: 40px;
+        }
+        
+        .nexa-banner {
+            background: linear-gradient(90deg, #1e3a8a 0%, #4c1d95 100%);
+            padding: 12px 0;
+            text-align: center;
+            font-size: 15px;
+            font-weight: 500;
+            color: white;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.15);
+        }
+        
+        .nexa-banner .nexacode {
+            font-weight: 700;
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(255,255,255,0.5);
+        }
+        
+        .hero-bg {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1617196034796-73dfa7b1fd56?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .dish-card {
+            transition: transform 0.3s ease;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            background: white;
+        }
+        
+        .dish-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            height: 300px;
+        }
+        
+        .gallery-item img {
+            transition: transform 0.5s ease;
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+        
+        .testimonial-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            position: relative;
+            padding: 30px;
+        }
+        
+        .testimonial-card:before {
+            content: """;
+            position: absolute;
+            top: -20px;
+            left: 50px;
+            font-size: 100px;
+            color: #e53e3e;
+            font-family: sans-serif;
+            line-height: 1;
+        }
+        
+        .sticky-header {
+            position: sticky;
+            top: 40px;
+            z-index: 999;
+            background: white;
+        }
+        
+        .event-package {
+            background: linear-gradient(to bottom right, #f7fafc, #e2e8f0);
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+        
+        .event-package:hover {
+            transform: translateY(-10px);
+        }
+        
+        .event-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #e53e3e;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        .floating-label {
+            position: relative;
+        }
+        
+        .floating-label label {
+            position: absolute;
+            top: 10px;
+            left: 15px;
+            transition: all 0.3s ease;
+            pointer-events: none;
+            color: #718096;
+        }
+        
+        .floating-label input:focus + label,
+        .floating-label input:not(:placeholder-shown) + label,
+        .floating-label textarea:focus + label,
+        .floating-label textarea:not(:placeholder-shown) + label {
+            top: -10px;
+            left: 10px;
+            background: white;
+            padding: 0 5px;
+            font-size: 12px;
+            color: #e53e3e;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <!-- NexaCode Banner Fixo -->
+    <div class="nexa-banner">
+        <div class="container mx-auto relative">
+            <span>✨ Este é um modelo premium para restaurantes da <span class="nexacode">NexaCode Solutions</span></span>
+            <div class="nexa-brand hidden sm:block">
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="sticky-header shadow-md py-4">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between">
+                <a href="#" class="flex items-center">
+                    <span class="text-2xl font-playfair font-bold text-secondary">Sakura</span>
+                    <span class="text-2xl font-playfair text-primary">Gourmet</span>
+                </a>
+                
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="#" class="font-medium text-dark hover:text-primary transition">Início</a>
+                    <a href="#menu" class="font-medium text-dark hover:text-primary transition">Menu</a>
+                    <a href="#eventos" class="font-medium text-dark hover:text-primary transition">Eventos</a>
+                    <a href="#sobre" class="font-medium text-dark hover:text-primary transition">Sobre</a>
+                    <a href="#reservas" class="px-6 py-2 bg-primary text-white font-medium rounded hover:bg-accent transition">Reservas</a>
+                </nav>
+                
+    <button class="md:hidden text-dark" id="mobile-menu-button" aria-label="Menu" aria-expanded="false">
+        <i class="fas fa-bars text-2xl"></i>
+    </button>
+    
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden fixed inset-0 z-50 bg-white md:hidden">
+        <div class="flex justify-end p-4">
+            <button id="close-menu" class="text-dark" aria-label="Fechar menu">
+                <i class="fas fa-times text-2xl"></i>
+            </button>
+        </div>
+        <nav class="flex flex-col items-center space-y-6 p-4">
+            <a href="#" class="font-medium text-dark hover:text-primary transition">Início</a>
+            <a href="#menu" class="font-medium text-dark hover:text-primary transition">Menu</a>
+            <a href="#eventos" class="font-medium text-dark hover:text-primary transition">Eventos</a>
+            <a href="#sobre" class="font-medium text-dark hover:text-primary transition">Sobre</a>
+            <a href="#reservas" class="px-6 py-2 bg-primary text-white font-medium rounded hover:bg-accent transition">Reservas</a>
+        </nav>
+    </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-bg pt-32 pb-20 md:pt-40 md:pb-28 text-white">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-3xl mx-auto text-center">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-playfair font-bold mb-6">
+                    Autêntica <span class="text-primary">Culinária</span> Japonesa
+                </h1>
+                
+                <p class="text-xl mb-10 max-w-2xl mx-auto">
+                    Experiência gastronômica premium com ingredientes frescos e técnicas tradicionais.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="#reservas" class="px-8 py-4 bg-primary text-white font-medium rounded-lg hover:bg-accent transition">
+                        <i class="fas fa-calendar-alt mr-2"></i> Fazer Reserva
+                    </a>
+                    <a href="#menu" class="px-8 py-4 bg-transparent border-2 border-white text-white font-medium rounded-lg hover:bg-white hover:text-dark transition">
+                        <i class="fas fa-utensils mr-2"></i> Ver Menu
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Highlights -->
+    <section id="menu" class="py-20 bg-white">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-3xl mx-auto text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-playfair font-bold mb-4">Destaques do Menu</h2>
+                <p class="text-gray-600">
+                    Nossas criações exclusivas preparadas por chefs renomados
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="dish-card">
+                    <img src="https://images.unsplash.com/photo-1617196034796-73dfa7b1fd56?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Sushi Premium" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start">
+                            <h3 class="text-xl font-bold">Sakura Special</h3>
+                            <span class="text-primary font-bold">R$ 89</span>
+                        </div>
+                        <p class="text-gray-600 mt-2">Seleção de 15 peças com os melhores cortes do dia.</p>
+                    </div>
+                </div>
+                
+                <div class="dish-card">
+                    <img src="https://images.unsplash.com/photo-1553621042-f6e147245754?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1450&q=80" alt="Sashimi">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start">
+                            <h3 class="text-xl font-bold">Sashimi Premium</h3>
+                            <span class="text-primary font-bold">R$ 125</span>
+                        </div>
+                        <p class="text-gray-600 mt-2">Fatias generosas de atum, salmão e peixe branco.</p>
+                    </div>
+                </div>
+                
+                <div class="dish-card">
+                    <img src="https://images.unsplash.com/photo-1580822184713-fc5400e7fe10?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1492&q=80" alt="Temaki">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start">
+                            <h3 class="text-xl font-bold">Temaki Especial</h3>
+                            <span class="text-primary font-bold">R$ 42</span>
+                        </div>
+                        <p class="text-gray-600 mt-2">Cones de alga nori recheados com salmão grelhado e cream cheese.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="#" class="px-8 py-3 border-2 border-primary text-primary font-medium rounded hover:bg-primary hover:text-white transition">
+                    Ver Menu Completo
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Events Section -->
+    <section id="eventos" class="py-20 bg-light">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-3xl mx-auto text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-playfair font-bold mb-4">Eventos Especiais</h2>
+                <p class="text-gray-600">
+                    Celebre momentos inesquecíveis com nossa gastronomia exclusiva
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div class="event-package">
+                    <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1674&q=80" alt="Evento Interno">
+                    <div class="p-8">
+                        <div class="event-badge">No local</div>
+                        <h3 class="text-2xl font-playfair font-bold mb-4">Eventos Internos</h3>
+                        <p class="text-gray-600 mb-6">
+                            Nossas instalações oferecem o ambiente perfeito para:
+                        </p>
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-start">
+                                <div class="flex-shrink-0 mt-1 mr-3 text-primary">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <span>Jantares corporativos</span>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="flex-shrink-0 mt-1 mr-3 text-primary">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <span>Aniversários e comemorações</span>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="flex-shrink-0 mt-1 mr-3 text-primary">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <span>Datas especiais</span>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="flex-shrink-0 mt-1 mr-3 text-primary">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <span>Degustações exclusivas</span>
+                            </li>
+                        </ul>
+                        <a href="#reservas" class="px-6 py-3 bg-primary text-white font-medium rounded-lg inline-flex items-center">
+                            <i class="fas fa-info-circle mr-2"></i> Solicitar Proposta
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="event-package">
+                    <img src="https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Evento Externo">
+                    <div class="p-8">
+                        <div class="event-badge">Externo</div>
+                        <h3 class="text-2xl font-playfair font-bold mb-4">Eventos Externos</h3>
+                        <p class="text-gray-600 mb-6">
+                            Leve a experiência Sakura Gourmet para seu evento:
+                        </p>
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-start">
+                                <div class="flex-shrink-0 mt-1 mr-3 text-primary">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <span>Casamentos</span>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="flex-shrink-0 mt-1 mr-3 text-primary">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <span>Coquetéis corporativos</span>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="flex-shrink-0 mt-1 mr-3 text-primary">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <span>Festas privadas</span>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="flex-shrink-0 mt-1 mr-3 text-primary">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <span>Eventos especiais</span>
+                            </li>
+                        </ul>
+                        <a href="#reservas" class="px-6 py-3 bg-primary text-white font-medium rounded-lg inline-flex items-center">
+                            <i class="fas fa-info-circle mr-2"></i> Solicitar Proposta
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-3xl mx-auto text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-playfair font-bold mb-4">Nossos Momentos</h2>
+                <p class="text-gray-600">
+                    Ambientes e experiências que criamos para nossos clientes
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1600565193348-f74bd3c7ccdf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Ambiente">
+                    <div class="gallery-overlay">
+                        <h3 class="text-xl font-bold">Ambiente Premium</h3>
+                    </div>
+                </div>
+                
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Bar">
+                    <div class="gallery-overlay">
+                        <h3 class="text-xl font-bold">Bar Exclusivo</h3>
+                    </div>
+                </div>
+                
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1601924582970-9238bcb495d9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1478&q=80" alt="Preparo">
+                    <div class="gallery-overlay">
+                        <h3 class="text-xl font-bold">Preparo Artesanal</h3>
+                    </div>
+                </div>
+                
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Evento">
+                    <div class="gallery-overlay">
+                        <h3 class="text-xl font-bold">Eventos Corporativos</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="sobre" class="py-20 bg-white">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-6xl mx-auto">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <h2 class="text-3xl md:text-4xl font-playfair font-bold mb-6">Nossa História</h2>
+                        <p class="text-gray-600 mb-6">
+                            Fundado em 2010, o Sakura Gourmet nasceu da paixão pela autêntica culinária japonesa e do desejo de proporcionar uma experiência gastronômica única em São Paulo.
+                        </p>
+                        <p class="text-gray-600 mb-6">
+                            Nossa equipe de chefs especializados combina técnicas tradicionais japonesas com apresentações contemporâneas, criando pratos que são verdadeiras obras de arte.
+                        </p>
+                        <div class="grid grid-cols-2 gap-6">
+                            <div class="text-center p-6 bg-light rounded-lg">
+                                <div class="text-3xl font-bold text-primary mb-2">13+</div>
+                                <div class="text-gray-600">Anos de Experiência</div>
+                            </div>
+                            <div class="text-center p-6 bg-light rounded-lg">
+                                <div class="text-3xl font-bold text-primary mb-2">5000+</div>
+                                <div class="text-gray-600">Clientes Satisfeitos</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1617196034796-73dfa7b1fd56?ixlib=rb-4.0.3" alt="Nossa História" class="rounded-lg shadow-xl">
+                        <div class="absolute -bottom-6 -right-6 bg-primary text-white p-6 rounded-lg shadow-lg">
+                            <div class="text-2xl font-bold mb-2">Qualidade</div>
+                            <p>Compromisso com a excelência em cada detalhe</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-20 bg-light">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-3xl mx-auto text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-playfair font-bold mb-4">O Que Nossos Clientes Dizem</h2>
+                <p class="text-gray-600">
+                    Experiências memoráveis compartilhadas
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="testimonial-card">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full overflow-hidden mr-4">
+                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1376&q=80" alt="Cliente" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 class="font-bold">Carolina Silva</h4>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic">"Celebramos nosso aniversário de casamento no Sakura Gourmet e foi inesquecível! A comida, o serviço e o ambiente foram perfeitos."</p>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full overflow-hidden mr-4">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80" alt="Cliente" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 class="font-bold">Ricardo Oliveira</h4>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic">"Contratamos o serviço de eventos externos para nosso casamento e todos elogiaram a qualidade da comida e a apresentação impecável."</p>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full overflow-hidden mr-4">
+                            <img src="https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80" alt="Cliente" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 class="font-bold">Fernanda Costa</h4>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic">"O jantar corporativo foi um sucesso! A equipe do Sakura cuidou de cada detalhe e os pratos personalizados impressionaram nossos clientes."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reservations Section -->
+    <section id="reservas" class="py-20 bg-white">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-4xl mx-auto">
+                <div class="bg-primary text-white rounded-2xl overflow-hidden shadow-xl">
+                    <div class="grid grid-cols-1 lg:grid-cols-2">
+                        <div class="p-12">
+                            <h2 class="text-3xl md:text-4xl font-playfair font-bold mb-6">Faça sua Reserva</h2>
+                            <p class="mb-8">
+                                Garanta sua experiência gastronômica inesquecível. Nossa equipe está pronta para atendê-lo.
+                            </p>
+                            
+                            <div class="space-y-6">
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0 p-3 rounded-lg bg-white text-primary mr-4">
+                                        <i class="fas fa-phone"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-lg font-bold">Reservas</h3>
+                                        <p>(11) 3333-4444</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0 p-3 rounded-lg bg-white text-primary mr-4">
+                                        <i class="fas fa-envelope"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-lg font-bold">Email</h3>
+                                        <p>reservas@sakuragourmet.com</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0 p-3 rounded-lg bg-white text-primary mr-4">
+                                        <i class="fas fa-clock"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-lg font-bold">Horário</h3>
+                                        <p>
+                                            Terça a Domingo: 18h às 23h<br>
+                                            Segunda: Fechado
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white p-12">
+                            <form>
+                                <div class="mb-6">
+                                    <div class="floating-label">
+                                        <input type="text" id="name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder=" ">
+                                        <label for="name">Nome Completo</label>
+                                    </div>
+                                </div>
+                                
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
+                                    <div>
+                                        <div class="floating-label">
+                                            <input type="email" id="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder=" ">
+                                            <label for="email">Email</label>
+                                        </div>
+                                    </div>
+                                    
+                                    <div>
+                                        <div class="floating-label">
+                                            <input type="tel" id="phone" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder=" ">
+                                            <label for="phone">Telefone</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
+                                    <div>
+                                        <div class="floating-label">
+                                            <input type="date" id="date" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder=" ">
+                                            <label for="date">Data</label>
+                                        </div>
+                                    </div>
+                                    
+                                    <div>
+                                        <div class="floating-label">
+                                            <input type="time" id="time" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder=" ">
+                                            <label for="time">Horário</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-6">
+                                    <div class="floating-label">
+                                        <textarea id="message" rows="3" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder=" "></textarea>
+                                        <label for="message">Observações</label>
+                                    </div>
+                                </div>
+                                
+                                <button type="submit" class="w-full px-6 py-4 bg-primary text-white font-medium rounded-lg hover:bg-accent transition">
+                                    Reservar Agora
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-gray-300 py-12">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <a href="#" class="flex items-center mb-4">
+                        <span class="text-2xl font-playfair font-bold text-white">Sakura</span>
+                        <span class="text-2xl font-playfair text-primary">Gourmet</span>
+                    </a>
+                    <p class="mb-4">
+                        Autêntica culinária japonesa em um ambiente premium, perfeita para ocasiões especiais.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition">
+                            <i class="fab fa-tripadvisor"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-4">Links Rápidos</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-white transition">Início</a></li>
+                        <li><a href="#menu" class="hover:text-white transition">Menu</a></li>
+                        <li><a href="#eventos" class="hover:text-white transition">Eventos</a></li>
+                        <li><a href="#sobre" class="hover:text-white transition">Sobre</a></li>
+                        <li><a href="#reservas" class="hover:text-white transition">Reservas</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-4">Horário</h3>
+                    <ul class="space-y-2">
+                        <li class="flex justify-between">
+                            <span>Terça - Quinta</span>
+                            <span>18h - 22h</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span>Sexta - Sábado</span>
+                            <span>18h - 23h</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span>Domingo</span>
+                            <span>18h - 21h</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span>Segunda</span>
+                            <span>Fechado</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-4">Contato</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-3 text-primary"></i>
+                            <span>Av. Paulista, 1000 - São Paulo, SP</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-phone mt-1 mr-3 text-primary"></i>
+                            <span>(11) 3333-4444</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-envelope mt-1 mr-3 text-primary"></i>
+                            <span>contato@sakuragourmet.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-12 pt-8 text-center">
+                <p>&copy; 2025 Sakura Gourmet. Todos os direitos reservados. | Desenvolvido por <span class="text-primary">NexaCode Solutions</span></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu functionality
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const closeMenu = document.getElementById('close-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            mobileMenuButton.setAttribute('aria-expanded', 
+                mobileMenuButton.getAttribute('aria-expanded') === 'false' ? 'true' : 'false'
+            );
+        });
+
+        closeMenu.addEventListener('click', () => {
+            mobileMenu.classList.add('hidden');
+            mobileMenuButton.setAttribute('aria-expanded', 'false');
+        });
+
+        // Form validation and submission
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form fields
+            const name = document.getElementById('name');
+            const email = document.getElementById('email');
+            const phone = document.getElementById('phone');
+            const date = document.getElementById('date');
+            const time = document.getElementById('time');
+            
+            // Basic validation
+            if (!name.value.trim()) {
+                alert('Por favor, preencha seu nome.');
+                name.focus();
+                return;
+            }
+            
+            if (!email.value.trim() || !email.value.includes('@')) {
+                alert('Por favor, insira um email válido.');
+                email.focus();
+                return;
+            }
+            
+            if (!phone.value.trim()) {
+                alert('Por favor, insira seu telefone.');
+                phone.focus();
+                return;
+            }
+            
+            if (!date.value) {
+                alert('Por favor, selecione uma data.');
+                date.focus();
+                return;
+            }
+            
+            if (!time.value) {
+                alert('Por favor, selecione um horário.');
+                time.focus();
+                return;
+            }
+            
+            // If validation passes
+            alert('Reserva solicitada com sucesso! Entraremos em contato para confirmação.');
+            this.reset();
+        });
+        
+        // Script para rolagem suave
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Script para os labels flutuantes
+        document.querySelectorAll('.floating-label input, .floating-label textarea').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.nextElementSibling.style.color = '#e53e3e';
+            });
+            
+            input.addEventListener('blur', function() {
+                if (!this.value) {
+                    this.nextElementSibling.style.color = '#718096';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

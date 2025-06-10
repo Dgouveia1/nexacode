@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salão de Beleza Premium | NexaCode Solutions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#d4af8e',
+                        secondary: '#8c6d5a',
+                        accent: '#c19a6b',
+                        light: '#f9f6f2',
+                        dark: '#4a3f35',
+                        nexaBlue: '#2563eb',
+                        nexaPurple: '#9333ea'
+                    },
+                    fontFamily: {
+                        'playfair': ['Playfair Display', 'serif'],
+                        'montserrat': ['Montserrat', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f9f6f2;
+            color: #4a3f35;
+            padding-top: 40px; /* Espaço para a barra fixa */
+        }
+        
+        .nexa-banner {
+            background: linear-gradient(90deg, #1e3a8a 0%, #4c1d95 100%);
+            padding: 12px 0;
+            text-align: center;
+            font-size: 15px;
+            font-weight: 500;
+            color: white;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.15);
+        }
+        
+        .nexa-banner .nexacode {
+            font-weight: 700;
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(255,255,255,0.5);
+        }
+        
+        .hero-bg {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1560066984-138dadb4c035?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1674&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .service-card {
+            transition: transform 0.3s ease;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            background: white;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        
+        .service-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: #f9f6f2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            border: 2px solid #d4af8e;
+        }
+        
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            height: 300px;
+        }
+        
+        .gallery-item img {
+            transition: transform 0.5s ease;
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+        
+        .testimonial-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            position: relative;
+            padding: 30px;
+        }
+        
+        .testimonial-card:before {
+            content: """;
+            position: absolute;
+            top: -20px;
+            left: 50px;
+            font-size: 100px;
+            color: #d4af8e;
+            font-family: sans-serif;
+            line-height: 1;
+        }
+        
+        .sticky-header {
+            position: sticky;
+            top: 40px;
+            z-index: 999;
+            background: white;
+        }
+        
+        .appointment-form {
+            background: linear-gradient(to bottom right, #f9f6f2, #e8e0d7);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .bridal-package {
+            background: linear-gradient(135deg, #f9f6f2 0%, #e8e0d7 100%);
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .package-badge {
+            position: absolute;
+            top: 20px;
+            right: -30px;
+            background: #d4af8e;
+            color: white;
+            padding: 10px 40px;
+            transform: rotate(45deg);
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .treatment-card {
+            transition: all 0.3s ease;
+            border-left: 4px solid #d4af8e;
+        }
+        
+        .treatment-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <!-- NexaCode Banner Fixo -->
+    <div class="nexa-banner">
+        <div class="container mx-auto relative">
+            <span>✨ Este é um modelo premium de landing page para salões de beleza da <span class="nexacode">NexaCode Solutions</span></span>
+            <div class="nexa-brand hidden sm:block">
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="sticky-header shadow-md py-4">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between">
+                <a href="#" class="flex items-center">
+                    <span class="text-2xl font-playfair font-bold text-secondary">Belle</span>
+                    <span class="text-2xl font-playfair text-primary">Élégance</span>
+                </a>
+                
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="#" class="font-medium text-dark hover:text-primary transition">Início</a>
+                    <a href="#servicos" class="font-medium text-dark hover:text-primary transition">Serviços</a>
+                    <a href="#tratamentos" class="font-medium text-dark hover:text-primary transition">Tratamentos</a>
+                    <a href="#noiva" class="font-medium text-dark hover:text-primary transition">Dia da Noiva</a>
+                    <a href="#contato" class="px-6 py-2 bg-primary text-white font-medium rounded hover:bg-secondary transition">Agendar</a>
+                </nav>
+                
+                <button class="md:hidden text-dark">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-bg pt-32 pb-20 md:pt-40 md:pb-28 text-white">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-3xl mx-auto text-center">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-playfair font-bold mb-6">
+                    Beleza que <span class="text-primary">Transforma</span>
+                </h1>
+                
+                <p class="text-xl mb-10 max-w-2xl mx-auto">
+                    Experiências de beleza premium com resultados excepcionais. Descubra o salão que redefiniu o padrão de excelência.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="#servicos" class="px-8 py-4 bg-primary text-white font-medium rounded-lg hover:bg-secondary transition">
+                        <i class="fas fa-spa mr-2"></i> Nossos Serviços
+                    </a>
+                    <a href="#contato" class="px-8 py-4 bg-transparent border-2 border-white text-white font-medium rounded-lg hover:bg-white hover:text-dark transition">
+                        <i class="fas fa-calendar-alt mr-2"></i> Agendar Horário
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="servicos" class="py-20 bg-white">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-3xl mx-auto text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-playfair font-bold mb-4">Nossos Serviços Exclusivos</h2>
+                <p class="text-gray-600">
+                    Cuidados especializados para realçar sua beleza natural
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="service-card p-8 text-center">
+                    <div class="service-icon">
+                        <i class="fas fa-cut text-3xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-playfair font-bold mb-3">Cabeleireiro</h3>
+                    <p class="text-gray-600 mb-4">Cortes, coloração, tratamentos e penteados para todos os tipos de cabelo.</p>
+                    <a href="#" class="text-primary font-medium">Ver mais <i class="fas fa-arrow-right ml-1"></i></a>
+                </div>
+                
+                <div class="service-card p-8 text-center">
+                    <div class="service-icon">
+                        <i class="fas fa-hand-sparkles text-3xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-playfair font-bold mb-3">Manicure & Pedicure</h3>
+                    <p class="text-gray-600 mb-4">Cuidados profissionais para mãos e pés com técnicas avançadas.</p>
+                    <a href="#" class="text-primary font-medium">Ver mais <i class="fas fa-arrow-right ml-1"></i></a>
+                </div>
+                
+                <div class="service-card p-8 text-center">
+                    <div class="service-icon">
+                        <i class="fas fa-eye text-3xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-playfair font-bold mb-3">Sobrancelhas & Cílios</h3>
+                    <p class="text-gray-600 mb-4">Design de sobrancelhas, extensões de cílios e tratamentos especiais.</p>
+                    <a href="#" class="text-primary font-medium">Ver mais <i class="fas fa-arrow-right ml-1"></i></a>
+                </div>
+                
+                <div class="service-card p-8 text-center">
+                    <div class="service-icon">
+                        <i class="fas fa-paint-brush text-3xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-playfair font-bold mb-3">Maquiagem</h3>
+                    <p class="text-gray-600 mb-4">Maquiagem profissional para eventos especiais e dia a dia.</p>
+                    <a href="#" class="text-primary font-medium">Ver mais <i class="fas fa-arrow-right ml-1"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Advanced Treatments -->
+    <section id="tratamentos" class="py-20 bg-light">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-3xl mx-auto text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-playfair font-bold mb-4">Estética Avançada</h2>
+                <p class="text-gray-600">
+                    Tecnologia de ponta para resultados extraordinários
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="treatment-card bg-white p-8">
+                    <div class="flex items-center mb-4">
+                        <div class="text-primary text-3xl mr-4">
+                            <i class="fas fa-spa"></i>
+                        </div>
+                        <h3 class="text-xl font-bold">Tratamentos Faciais</h3>
+                    </div>
+                    <p class="text-gray-600">Hidratação profunda, rejuvenescimento, peeling de diamante e limpeza de pele profissional.</p>
+                </div>
+                
+                <div class="treatment-card bg-white p-8">
+                    <div class="flex items-center mb-4">
+                        <div class="text-primary text-3xl mr-4">
+                            <i class="fas fa-wind"></i>
+                        </div>
+                        <h3 class="text-xl font-bold">Depilação a Laser</h3>
+                    </div>
+                    <p class="text-gray-600">Resultados duradouros com tecnologia de última geração para todas as áreas do corpo.</p>
+                </div>
+                
+                <div class="treatment-card bg-white p-8">
+                    <div class="flex items-center mb-4">
+                        <div class="text-primary text-3xl mr-4">
+                            <i class="fas fa-apple-alt"></i>
+                        </div>
+                        <h3 class="text-xl font-bold">Corporal Premium</h3>
+                    </div>
+                    <p class="text-gray-600">Massagem modeladora, drenagem linfática, radiofrequência e criolipólise.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bridal Section -->
+    <section id="noiva" class="py-20 bg-white">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="text-3xl md:text-4xl font-playfair font-bold mb-6">Dia da Noiva</h2>
+                    <p class="text-gray-600 mb-6">
+                        O dia mais especial da sua vida merece uma preparação perfeita. Nosso pacote completo inclui:
+                    </p>
+                    
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-start">
+                            <div class="flex-shrink-0 mt-1 mr-3 text-primary">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <span>Teste de maquiagem e penteado prévio</span>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="flex-shrink-0 mt-1 mr-3 text-primary">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <span>Maquiagem profissional duradoura</span>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="flex-shrink-0 mt-1 mr-3 text-primary">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <span>Penteado sofisticado com acessórios</span>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="flex-shrink-0 mt-1 mr-3 text-primary">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <span>Manicure e pedicure premium</span>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="flex-shrink-0 mt-1 mr-3 text-primary">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <span>Design de sobrancelhas</span>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="flex-shrink-0 mt-1 mr-3 text-primary">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <span>Sala VIP privativa com acompanhante</span>
+                        </li>
+                    </ul>
+                    
+                    <a href="#contato" class="px-8 py-3 bg-primary text-white font-medium rounded-lg inline-flex items-center">
+                        <i class="fas fa-calendar-check mr-2"></i> Agendar Consulta
+                    </a>
+                </div>
+                
+                <div class="bridal-package relative">
+                    <div class="package-badge">
+                        Pacote Premium
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Noiva" class="w-full h-full object-cover">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="py-20 bg-light">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-3xl mx-auto text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-playfair font-bold mb-4">Nossos Trabalhos</h2>
+                <p class="text-gray-600">
+                    Resultados que falam por si mesmos
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1595475884562-073c30d45670?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80" alt="Cabelo">
+                    <div class="gallery-overlay">
+                        <h3 class="text-xl font-bold">Transformação Capilar</h3>
+                    </div>
+                </div>
+                
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1599351431405-41b9a8d40d0d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Maquiagem">
+                    <div class="gallery-overlay">
+                        <h3 class="text-xl font-bold">Maquiagem Profissional</h3>
+                    </div>
+                </div>
+                
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1603532648955-a039f2e364da?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80" alt="Noiva">
+                    <div class="gallery-overlay">
+                        <h3 class="text-xl font-bold">Preparação de Noiva</h3>
+                    </div>
+                </div>
+                
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1607990281513-2c110a25bd8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1634&q=80" alt="Unhas">
+                    <div class="gallery-overlay">
+                        <h3 class="text-xl font-bold">Design de Unhas</h3>
+                    </div>
+                </div>
+                
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1622288432450-277d0fef3a0d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Sobrancelhas">
+                    <div class="gallery-overlay">
+                        <h3 class="text-xl font-bold">Design de Sobrancelhas</h3>
+                    </div>
+                </div>
+                
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Estética">
+                    <div class="gallery-overlay">
+                        <h3 class="text-xl font-bold">Tratamentos Estéticos</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-3xl mx-auto text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-playfair font-bold mb-4">O Que Nossas Clientes Dizem</h2>
+                <p class="text-gray-600">
+                    Depoimentos de quem já viveu a experiência Belle Élégance
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="testimonial-card">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full overflow-hidden mr-4">
+                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1376&q=80" alt="Cliente" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 class="font-bold">Ana Carolina</h4>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic">"Minha experiência como noiva foi perfeita! A equipe cuidou de cada detalhe e me fez sentir uma verdadeira princesa no meu grande dia."</p>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full overflow-hidden mr-4">
+                            <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80" alt="Cliente" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 class="font-bold">Beatriz Rocha</h4>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic">"Os tratamentos faciais transformaram minha pele! Nunca me senti tão bem e confiante. Recomendo a todas!"</p>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full overflow-hidden mr-4">
+                            <img src="https://images.unsplash.com/photo-1475823678248-624fc6f85785?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1370&q=80" alt="Cliente" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 class="font-bold">Carolina Mendes</h4>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic">"As extensões de cílios são incríveis! Pareço estar sempre maquiada, mesmo sem maquiagem. Obrigada pelo excelente trabalho!"</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Appointment Section -->
+    <section id="contato" class="py-20 bg-light">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="text-3xl md:text-4xl font-playfair font-bold mb-6">Agende Sua Visita</h2>
+                    <p class="text-gray-600 mb-8">
+                        Estamos prontos para recebê-lo em nosso espaço exclusivo. Preencha o formulário e nossa equipe entrará em contato para confirmar seu horário.
+                    </p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 p-3 rounded-lg bg-primary text-white">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="text-lg font-medium">Endereço</h3>
+                                <p class="text-gray-600">Av. Paulista, 1000 - Bela Vista, São Paulo - SP</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 p-3 rounded-lg bg-primary text-white">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="text-lg font-medium">Telefone</h3>
+                                <p class="text-gray-600">(11) 99999-9999</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 p-3 rounded-lg bg-primary text-white">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="text-lg font-medium">Horário de Funcionamento</h3>
+                                <p class="text-gray-600">
+                                    Segunda a Sexta: 9h às 20h<br>
+                                    Sábado: 8h às 18h<br>
+                                    Domingo: Fechado
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="appointment-form p-8">
+                    <form>
+                        <div class="mb-6">
+                            <label class="block text-gray-700 mb-2">Nome Completo</label>
+                            <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                        </div>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <label class="block text-gray-700 mb-2">Email</label>
+                                <input type="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-gray-700 mb-2">Telefone</label>
+                                <input type="tel" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <label class="block text-gray-700 mb-2">Serviço</label>
+                                <select class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                    <option>Cabelo</option>
+                                    <option>Manicure & Pedicure</option>
+                                    <option>Sobrancelhas & Cílios</option>
+                                    <option>Maquiagem</option>
+                                    <option>Estética Facial</option>
+                                    <option>Estética Corporal</option>
+                                    <option>Dia da Noiva</option>
+                                    <option>Tratamentos VIP</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-gray-700 mb-2">Data Preferencial</label>
+                                <input type="date" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                            </div>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label class="block text-gray-700 mb-2">Mensagem</label>
+                            <textarea rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                        </div>
+                        
+                        <button type="submit" class="w-full px-6 py-4 bg-primary text-white font-medium rounded-lg hover:bg-secondary transition">
+                            Agendar Horário
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-gray-300 py-12">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <a href="#" class="flex items-center mb-4">
+                        <span class="text-2xl font-playfair font-bold text-white">Belle</span>
+                        <span class="text-2xl font-playfair text-primary">Élégance</span>
+                    </a>
+                    <p class="mb-4">
+                        Seu refúgio de beleza e bem-estar, onde cada serviço é uma experiência transformadora.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition">
+                            <i class="fab fa-pinterest"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-4">Links Rápidos</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-white transition">Início</a></li>
+                        <li><a href="#servicos" class="hover:text-white transition">Serviços</a></li>
+                        <li><a href="#tratamentos" class="hover:text-white transition">Tratamentos</a></li>
+                        <li><a href="#noiva" class="hover:text-white transition">Dia da Noiva</a></li>
+                        <li><a href="#contato" class="hover:text-white transition">Agendamento</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-4">Serviços</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-white transition">Cabelo</a></li>
+                        <li><a href="#" class="hover:text-white transition">Manicure & Pedicure</a></li>
+                        <li><a href="#" class="hover:text-white transition">Sobrancelhas & Cílios</a></li>
+                        <li><a href="#" class="hover:text-white transition">Maquiagem</a></li>
+                        <li><a href="#" class="hover:text-white transition">Estética</a></li>
+                        <li><a href="#" class="hover:text-white transition">Dia da Noiva</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-4">Newsletter</h3>
+                    <p class="mb-4">Inscreva-se para receber promoções exclusivas.</p>
+                    <form class="flex">
+                        <input type="email" placeholder="Seu email" class="px-4 py-2 w-full rounded-l-lg focus:outline-none text-dark">
+                        <button class="bg-primary text-white px-4 py-2 rounded-r-lg">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-12 pt-8 text-center">
+                <p>&copy; 2023 Belle Élégance. Todos os direitos reservados. | Desenvolvido por <span class="text-primary">NexaCode Solutions</span></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Script para o formulário
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Agendamento solicitado com sucesso! Entraremos em contato para confirmação.');
+            this.reset();
+        });
+        
+        // Script para rolagem suave
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

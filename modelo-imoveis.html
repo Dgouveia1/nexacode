@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modelo Premium - Imobiliárias | NexaCode Solutions</title>
+    <title>Modelo Premium Imóveis | NexaCode Solutions</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -16,7 +16,9 @@
                         secondary: '#1a1a1a',
                         accent: '#8e7037',
                         light: '#f8f5f0',
-                        dark: '#2c2c2c'
+                        dark: '#2c2c2c',
+                        nexaBlue: '#2563eb',
+                        nexaPurple: '#9333ea'
                     },
                     fontFamily: {
                         'playfair': ['Playfair Display', 'serif'],
@@ -31,6 +33,28 @@
             font-family: 'Montserrat', sans-serif;
             background-color: #f8f5f0;
             color: #2c2c2c;
+            padding-top: 40px; /* Espaço para a barra fixa */
+        }
+        
+        .nexa-banner {
+            background: linear-gradient(90deg, #1e3a8a 0%, #4c1d95 100%);
+            padding: 12px 0;
+            text-align: center;
+            font-size: 15px;
+            font-weight: 500;
+            color: white;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.15);
+        }
+        
+        .nexa-banner .nexacode {
+            font-weight: 700;
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(255,255,255,0.5);
         }
         
         .hero-bg {
@@ -149,11 +173,53 @@
             font-size: 12px;
             color: #c8a97e;
         }
+        
+        .nexa-brand {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+        }
+        
+        .nexa-logo {
+            font-weight: 700;
+            color: #ffffff;
+            margin-left: 5px;
+            position: relative;
+        }
+        
+        .nexa-logo:after {
+            content: "";
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: white;
+        }
+        
+        .sticky-header {
+            position: sticky;
+            top: 40px; /* Altura da barra NexaCode */
+            z-index: 999;
+        }
     </style>
 </head>
 <body class="bg-light">
+    <!-- NexaCode Banner Fixo -->
+    <div class="nexa-banner">
+        <div class="container mx-auto relative">
+            <span>✨ Este é um modelo premium de landing page da <span class="nexacode">NexaCode Solutions</span></span>
+            <div class="nexa-brand hidden sm:block">
+            </div>
+        </div>
+    </div>
+
     <!-- Header -->
-    <header class="fixed top-0 left-0 right-0 z-50 bg-white shadow-md">
+    <header class="sticky-header bg-white shadow-md">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
                 <a href="#" class="flex items-center">
