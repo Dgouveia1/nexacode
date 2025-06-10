@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modelo Premium - Imobiliárias | NexaCode Solutions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#c8a97e',
+                        secondary: '#1a1a1a',
+                        accent: '#8e7037',
+                        light: '#f8f5f0',
+                        dark: '#2c2c2c'
+                    },
+                    fontFamily: {
+                        'playfair': ['Playfair Display', 'serif'],
+                        'montserrat': ['Montserrat', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f8f5f0;
+            color: #2c2c2c;
+        }
+        
+        .hero-bg {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1475&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .design-tip {
+            position: relative;
+        }
+        
+        .design-tip .tip-content {
+            display: none;
+            position: absolute;
+            background: white;
+            border: 2px solid #c8a97e;
+            padding: 15px;
+            border-radius: 8px;
+            width: 300px;
+            z-index: 100;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            font-size: 14px;
+        }
+        
+        .design-tip:hover .tip-content {
+            display: block;
+        }
+        
+        .property-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
+        }
+        
+        .property-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 30px rgba(0,0,0,0.15);
+        }
+        
+        .property-card img {
+            transition: transform 0.5s ease;
+        }
+        
+        .property-card:hover img {
+            transform: scale(1.05);
+        }
+        
+        .testimonial-card {
+            background: linear-gradient(to bottom right, #f8f5f0, #e6e0d5);
+            border-left: 4px solid #c8a97e;
+        }
+        
+        .btn-primary {
+            background: #c8a97e;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            background: #b5946e;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(198, 169, 126, 0.3);
+        }
+        
+        .section-title {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title:after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 70px;
+            height: 3px;
+            background: #c8a97e;
+        }
+        
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: #f8f5f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            border: 2px solid #c8a97e;
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link:after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #c8a97e;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover:after {
+            width: 100%;
+        }
+        
+        .floating-label {
+            position: absolute;
+            top: -10px;
+            left: 15px;
+            background: white;
+            padding: 0 10px;
+            font-size: 12px;
+            color: #c8a97e;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-white shadow-md">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <a href="#" class="flex items-center">
+                    <span class="text-2xl font-playfair font-bold text-secondary">LUXO</span>
+                    <span class="text-2xl font-playfair text-primary">Imóveis</span>
+                </a>
+                
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="#" class="nav-link font-medium text-secondary">Início</a>
+                    <a href="#destaques" class="nav-link font-medium text-secondary">Imóveis</a>
+                    <a href="#servicos" class="nav-link font-medium text-secondary">Serviços</a>
+                    <a href="#sobre" class="nav-link font-medium text-secondary">Sobre Nós</a>
+                    <a href="#contato" class="px-6 py-2 btn-primary text-white font-medium rounded">Contato</a>
+                </nav>
+                
+                <button class="md:hidden text-secondary">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-bg pt-32 pb-20 md:pt-40 md:pb-28 text-white">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-3xl">
+                <div class="design-tip inline-block mb-6">
+                    <span class="text-sm bg-primary px-3 py-1 rounded-full flex items-center">
+                        <i class="fas fa-lightbulb mr-2"></i> Design Estratégico
+                        <i class="fas fa-info-circle ml-2"></i>
+                    </span>
+                    <div class="tip-content">
+                        <h4 class="font-bold text-primary mb-2">Hero Section Impactante</h4>
+                        <p>Usamos imagem de alta qualidade com sobreposição escura para destacar o texto. O título evoca emoção e o botão de CTA é proeminente com efeito hover.</p>
+                    </div>
+                </div>
+                
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-playfair font-bold mb-6">
+                    Encontre seu <span class="text-primary">Refúgio</span> de Luxo
+                </h1>
+                
+                <p class="text-xl mb-10 max-w-xl">
+                    Propriedades exclusivas para quem busca excelência, conforto e sofisticação.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="#destaques" class="px-8 py-4 btn-primary text-white font-medium text-center">
+                        <i class="fas fa-search mr-2"></i> Explorar Imóveis
+                    </a>
+                    <a href="#contato" class="px-8 py-4 bg-transparent border-2 border-white text-white font-medium text-center hover:bg-white hover:text-secondary transition">
+                        <i class="fas fa-phone mr-2"></i> Fale com Especialista
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-3xl mx-auto text-center mb-16">
+                <div class="design-tip inline-block mb-4">
+                    <h2 class="text-3xl md:text-4xl font-playfair font-bold mb-4 section-title">Por Que Escolher Nós?</h2>
+                    <div class="tip-content">
+                        <h4 class="font-bold text-primary mb-2">Destaque de Benefícios</h4>
+                        <p>Seção estratégica para criar confiança imediatamente. Ícones visuais e descrições curtas destacam vantagens competitivas.</p>
+                    </div>
+                </div>
+                <p class="text-gray-600">
+                    Excelência em cada detalhe para proporcionar a melhor experiência imobiliária
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="text-center p-6">
+                    <div class="feature-icon">
+                        <i class="fas fa-home text-3xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-playfair font-bold mb-3">Propriedades Exclusivas</h3>
+                    <p class="text-gray-600">Seleção rigorosa de imóveis premium em localizações privilegiadas.</p>
+                </div>
+                
+                <div class="text-center p-6">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-tie text-3xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-playfair font-bold mb-3">Consultoria Personalizada</h3>
+                    <p class="text-gray-600">Atendimento individualizado para entender e superar suas expectativas.</p>
+                </div>
+                
+                <div class="text-center p-6">
+                    <div class="feature-icon">
+                        <i class="fas fa-lock text-3xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-playfair font-bold mb-3">Segurança Jurídica</h3>
+                    <p class="text-gray-600">Processos transparentes e documentação completa para tranquilidade.</p>
+                </div>
+                
+                <div class="text-center p-6">
+                    <div class="feature-icon">
+                        <i class="fas fa-handshake text-3xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-playfair font-bold mb-3">Negociação Estratégica</h3>
+                    <p class="text-gray-600">Expertise para alcançar os melhores acordos para ambas as partes.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Property Highlights -->
+    <section id="destaques" class="py-20 bg-light">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-3xl mx-auto text-center mb-16">
+                <div class="design-tip inline-block mb-4">
+                    <h2 class="text-3xl md:text-4xl font-playfair font-bold mb-4 section-title">Imóveis em Destaque</h2>
+                    <div class="tip-content">
+                        <h4 class="font-bold text-primary mb-2">Vitrine de Produtos</h4>
+                        <p>Cards com hover effects para engajamento. Informações essenciais visíveis de imediato. Botão de ação claro em cada card.</p>
+                    </div>
+                </div>
+                <p class="text-gray-600">
+                    Descubra nossas joias exclusivas cuidadosamente selecionadas
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="property-card bg-white rounded-xl shadow-md">
+                    <div class="overflow-hidden rounded-t-xl">
+                        <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80" alt="Mansão Moderna" class="w-full h-64 object-cover">
+                    </div>
+                    <div class="p-6">
+                        <span class="bg-primary text-white text-sm px-3 py-1 rounded-full">Venda</span>
+                        <h3 class="text-xl font-playfair font-bold mt-4 mb-2">Mansão Moderna</h3>
+                        <p class="text-gray-600 mb-4"><i class="fas fa-map-marker-alt text-primary mr-2"></i> Jardins, São Paulo</p>
+                        <div class="flex justify-between border-b border-gray-200 pb-4 mb-4">
+                            <div><i class="fas fa-bed text-primary mr-2"></i> 5 quartos</div>
+                            <div><i class="fas fa-bath text-primary mr-2"></i> 6 banheiros</div>
+                            <div><i class="fas fa-vector-square text-primary mr-2"></i> 850m²</div>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-2xl font-bold">R$ 8.500.000</span>
+                            <button class="px-4 py-2 btn-primary text-white rounded">
+                                Detalhes
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="property-card bg-white rounded-xl shadow-md">
+                    <div class="overflow-hidden rounded-t-xl">
+                        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Cobertura Luxuosa" class="w-full h-64 object-cover">
+                    </div>
+                    <div class="p-6">
+                        <span class="bg-primary text-white text-sm px-3 py-1 rounded-full">Venda</span>
+                        <h3 class="text-xl font-playfair font-bold mt-4 mb-2">Cobertura Luxuosa</h3>
+                        <p class="text-gray-600 mb-4"><i class="fas fa-map-marker-alt text-primary mr-2"></i> Ipanema, Rio de Janeiro</p>
+                        <div class="flex justify-between border-b border-gray-200 pb-4 mb-4">
+                            <div><i class="fas fa-bed text-primary mr-2"></i> 4 quartos</div>
+                            <div><i class="fas fa-bath text-primary mr-2"></i> 5 banheiros</div>
+                            <div><i class="fas fa-vector-square text-primary mr-2"></i> 480m²</div>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-2xl font-bold">R$ 6.200.000</span>
+                            <button class="px-4 py-2 btn-primary text-white rounded">
+                                Detalhes
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="property-card bg-white rounded-xl shadow-md">
+                    <div class="overflow-hidden rounded-t-xl">
+                        <img src="https://images.unsplash.com/photo-1574362848149-11496d93a7c7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1084&q=80" alt="Casa de Campo" class="w-full h-64 object-cover">
+                    </div>
+                    <div class="p-6">
+                        <span class="bg-primary text-white text-sm px-3 py-1 rounded-full">Locação</span>
+                        <h3 class="text-xl font-playfair font-bold mt-4 mb-2">Casa de Campo</h3>
+                        <p class="text-gray-600 mb-4"><i class="fas fa-map-marker-alt text-primary mr-2"></i> Campos do Jordão, SP</p>
+                        <div class="flex justify-between border-b border-gray-200 pb-4 mb-4">
+                            <div><i class="fas fa-bed text-primary mr-2"></i> 6 quartos</div>
+                            <div><i class="fas fa-bath text-primary mr-2"></i> 7 banheiros</div>
+                            <div><i class="fas fa-vector-square text-primary mr-2"></i> 1.200m²</div>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-2xl font-bold">R$ 35.000/mês</span>
+                            <button class="px-4 py-2 btn-primary text-white rounded">
+                                Detalhes
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="#" class="px-8 py-3 border-2 border-primary text-primary font-medium rounded hover:bg-primary hover:text-white transition">
+                    Ver Todos os Imóveis
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="servicos" class="py-20 bg-white">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-3xl mx-auto text-center mb-16">
+                <div class="design-tip inline-block mb-4">
+                    <h2 class="text-3xl md:text-4xl font-playfair font-bold mb-4 section-title">Nossos Serviços Premium</h2>
+                    <div class="tip-content">
+                        <h4 class="font-bold text-primary mb-2">Portfólio de Serviços</h4>
+                        <p>Apresentação clara de serviços com ícones visuais. Destaque para o serviço principal usando cor e tamanho diferenciados.</p>
+                    </div>
+                </div>
+                <p class="text-gray-600">
+                    Soluções completas para todas as suas necessidades imobiliárias
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-light p-8 rounded-xl">
+                    <div class="text-primary text-4xl mb-4">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <h3 class="text-xl font-playfair font-bold mb-3">Compra de Imóveis</h3>
+                    <p class="text-gray-600 mb-4">Encontramos a propriedade perfeita que atenda a todos os seus critérios e aspirações.</p>
+                    <a href="#" class="text-primary font-medium">Saiba mais <i class="fas fa-arrow-right ml-2"></i></a>
+                </div>
+                
+                <div class="bg-light p-8 rounded-xl relative">
+                    <div class="absolute top-0 right-0 bg-primary text-white px-4 py-1 rounded-bl-lg">
+                        Mais Procurado
+                    </div>
+                    <div class="text-primary text-4xl mb-4">
+                        <i class="fas fa-key"></i>
+                    </div>
+                    <h3 class="text-xl font-playfair font-bold mb-3">Venda com Excelência</h3>
+                    <p class="text-gray-600 mb-4">Estratégias premium para maximizar o valor do seu imóvel e agilizar a venda.</p>
+                    <a href="#" class="text-primary font-medium">Saiba mais <i class="fas fa-arrow-right ml-2"></i></a>
+                </div>
+                
+                <div class="bg-light p-8 rounded-xl">
+                    <div class="text-primary text-4xl mb-4">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <h3 class="text-xl font-playfair font-bold mb-3">Gestão de Aluguel</h3>
+                    <p class="text-gray-600 mb-4">Administração completa para proprietários que valorizam tranquilidade e retorno.</p>
+                    <a href="#" class="text-primary font-medium">Saiba mais <i class="fas fa-arrow-right ml-2"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-20 bg-light">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-3xl mx-auto text-center mb-16">
+                <div class="design-tip inline-block mb-4">
+                    <h2 class="text-3xl md:text-4xl font-playfair font-bold mb-4 section-title">O Que Nossos Clientes Dizem</h2>
+                    <div class="tip-content">
+                        <h4 class="font-bold text-primary mb-2">Prova Social</h4>
+                        <p>Depoimentos reais com fotos aumentam credibilidade. Destaque visual para depoimentos com notas altas.</p>
+                    </div>
+                </div>
+                <p class="text-gray-600">
+                    Histórias de sucesso de quem encontrou seu lar dos sonhos conosco
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="testimonial-card p-8 rounded-xl">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full overflow-hidden mr-4">
+                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Cliente" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 class="font-bold">Camila Mendes</h4>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic">"A equipe da LUXO Imóveis transformou nossa busca por um apartamento em uma experiência verdadeiramente excepcional. Atenção aos detalhes e profissionalismo incomparáveis."</p>
+                </div>
+                
+                <div class="testimonial-card p-8 rounded-xl">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full overflow-hidden mr-4">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Cliente" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 class="font-bold">Ricardo Oliveira</h4>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic">"Vendi minha cobertura em tempo recorde e por um valor 15% acima do mercado. A estratégia de marketing digital que utilizaram fez toda a diferença."</p>
+                </div>
+                
+                <div class="testimonial-card p-8 rounded-xl">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full overflow-hidden mr-4">
+                            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=688&q=80" alt="Cliente" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 class="font-bold">Fernanda Costa</h4>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic">"Como investidora, valorizo profissionais que entendem de mercado. A assessoria da LUXO me ajudou a identificar oportunidades com excelente potencial de valorização."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-secondary text-white">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-4xl mx-auto text-center">
+                <div class="design-tip inline-block mb-6">
+                    <h2 class="text-3xl md:text-4xl font-playfair font-bold mb-6">Pronto para Transformar seu Negócio Imobiliário?</h2>
+                    <div class="tip-content">
+                        <h4 class="font-bold text-primary mb-2">Chamada Final para Ação</h4>
+                        <p>Frase impactante que cria urgência. Botão proeminente com efeito hover. Garantia visual para reduzir objeções.</p>
+                    </div>
+                </div>
+                
+                <p class="text-xl mb-10 max-w-2xl mx-auto">
+                    Deixe nossa equipe de especialistas criar uma presença digital premium que reflete a excelência dos seus serviços.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="#contato" class="px-8 py-4 btn-primary text-white font-medium">
+                        <i class="fas fa-calendar-check mr-2"></i> Agendar Consultoria
+                    </a>
+                    <a href="tel:+551799999999" class="px-8 py-4 bg-transparent border-2 border-primary text-primary font-medium hover:bg-primary hover:text-white transition">
+                        <i class="fas fa-phone mr-2"></i> (17) 99604-7456
+                    </a>
+                </div>
+                
+                <div class="mt-8 flex items-center justify-center bg-white bg-opacity-10 p-4 rounded-lg max-w-md mx-auto">
+                    <i class="fas fa-shield-alt text-2xl text-primary mr-3"></i>
+                    <p>Consultoria inicial sem compromisso</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contato" class="py-20 bg-white">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-5xl mx-auto">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    <div>
+                        <div class="design-tip mb-6">
+                            <h2 class="text-3xl md:text-4xl font-playfair font-bold mb-6">Entre em Contato</h2>
+                            <div class="tip-content">
+                                <h4 class="font-bold text-primary mb-2">Formulário de Conversão</h4>
+                                <p>Formulário simplificado com apenas campos essenciais. Rótulos flutuantes para melhor experiência do usuário. Botão de destaque com ícone.</p>
+                            </div>
+                        </div>
+                        
+                        <p class="text-gray-600 mb-8">
+                            Estamos prontos para elevar sua presença digital no mercado imobiliário de luxo.
+                        </p>
+                        
+                        <div class="space-y-6">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 p-3 rounded-lg bg-primary text-white">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <h3 class="text-lg font-medium">Telefone</h3>
+                                    <p class="text-gray-600">(17) 99604-7456</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 p-3 rounded-lg bg-primary text-white">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <h3 class="text-lg font-medium">Email</h3>
+                                    <p class="text-gray-600">contato@luxoimoveis.com.br</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 p-3 rounded-lg bg-primary text-white">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <h3 class="text-lg font-medium">Horário</h3>
+                                    <p class="text-gray-600">Seg-Sex: 9h às 18h | Sáb: 10h às 14h</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-light rounded-xl p-8">
+                        <form>
+                            <div class="mb-6 relative">
+                                <input type="text" id="name" class="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder=" ">
+                                <label for="name" class="floating-label">Nome Completo</label>
+                            </div>
+                            
+                            <div class="mb-6 relative">
+                                <input type="email" id="email" class="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder=" ">
+                                <label for="email" class="floating-label">Email</label>
+                            </div>
+                            
+                            <div class="mb-6 relative">
+                                <input type="tel" id="phone" class="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder=" ">
+                                <label for="phone" class="floating-label">Telefone</label>
+                            </div>
+                            
+                            <div class="mb-6 relative">
+                                <textarea id="message" rows="4" class="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder=" "></textarea>
+                                <label for="message" class="floating-label">Como podemos ajudar?</label>
+                            </div>
+                            
+                            <button type="submit" class="w-full px-6 py-4 btn-primary text-white font-medium rounded-lg">
+                                Enviar Mensagem
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-secondary text-gray-300 py-12">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <a href="#" class="flex items-center mb-4">
+                        <span class="text-2xl font-playfair font-bold text-white">LUXO</span>
+                        <span class="text-2xl font-playfair text-primary">Imóveis</span>
+                    </a>
+                    <p class="mb-4">
+                        Especialistas em imóveis de alto padrão e soluções imobiliárias premium.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-4">Links Rápidos</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-white">Início</a></li>
+                        <li><a href="#destaques" class="hover:text-white">Imóveis em Destaque</a></li>
+                        <li><a href="#servicos" class="hover:text-white">Nossos Serviços</a></li>
+                        <li><a href="#sobre" class="hover:text-white">Sobre Nós</a></li>
+                        <li><a href="#contato" class="hover:text-white">Contato</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-4">Serviços</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-white">Compra de Imóveis</a></li>
+                        <li><a href="#" class="hover:text-white">Venda Premium</a></li>
+                        <li><a href="#" class="hover:text-white">Locação de Luxo</a></li>
+                        <li><a href="#" class="hover:text-white">Avaliações de Imóveis</a></li>
+                        <li><a href="#" class="hover:text-white">Consultoria de Investimentos</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-4">Newsletter</h3>
+                    <p class="mb-4">Inscreva-se para receber nossos lançamentos exclusivos.</p>
+                    <form class="flex">
+                        <input type="email" placeholder="Seu email" class="px-4 py-2 w-full rounded-l-lg focus:outline-none text-gray-800">
+                        <button class="bg-primary text-white px-4 py-2 rounded-r-lg">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-12 pt-8 text-center">
+                <p>&copy; 2025 LUXO Imóveis. Todos os direitos reservados. | Desenvolvido por <span class="text-primary">NexaCode Solutions</span></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Script para mostrar/ocultar dicas de design
+        document.querySelectorAll('.design-tip').forEach(tip => {
+            tip.addEventListener('mouseenter', function() {
+                this.querySelector('.tip-content').style.display = 'block';
+            });
+            
+            tip.addEventListener('mouseleave', function() {
+                this.querySelector('.tip-content').style.display = 'none';
+            });
+        });
+        
+        // Form submission simulation
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Mensagem enviada com sucesso! Entraremos em contato em breve.');
+            this.reset();
+        });
+        
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
